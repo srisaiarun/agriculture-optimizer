@@ -1,0 +1,21 @@
+{
+  "name": "llp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yashwanthdevulapally/mp-agriculture.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yashwanthdevulapally/mp-agriculture/issues"
+  },
+  "homepage": "https://github.com/Yashwanthdevulapally/mp-agriculture#readme",
+  "description": ""
+}

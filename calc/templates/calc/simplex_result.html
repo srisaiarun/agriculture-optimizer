@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f5f7fa 0%, #e4f0f8 100%); min-height: 100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+                    <div class="card-header bg-primary text-white py-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0 font-weight-light"><i class="fas fa-leaf mr-2"></i> Optimal Farming Solution</h2>
+                            <span class="badge badge-light text-primary">AI Optimized</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <!-- Input Parameters Section -->
+                        <div class="p-5 border-bottom">
+                            <h4 class="card-title mb-4 text-primary">
+                                <i class="fas fa-tags mr-2"></i>Input Parameters
+                            </h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="parameter-card bg-light p-4 mb-4 rounded">
+                                        <h5 class="font-weight-bold text-success">{{ problem.crop1_name }}</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Profit per acre:</span>
+                                            <span class="font-weight-bold">₹{{ problem.crop1_profit }}</span>
+                                        </div>
+                                        <div class="progress mt-2" style="height: 8px;">
+                                            <div class="progress-bar bg-success" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="parameter-card bg-light p-4 mb-4 rounded">
+                                        <h5 class="font-weight-bold text-info">{{ problem.crop2_name }}</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Profit per acre:</span>
+                                            <span class="font-weight-bold">₹{{ problem.crop2_profit }}</span>
+                                        </div>
+                                        <div class="progress mt-2" style="height: 8px;">
+                                            <div class="progress-bar bg-info" style="width: 40%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="resource-indicator p-3 rounded mb-3" style="background-color: rgba(40, 167, 69, 0.1);">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="font-weight-bold"><i class="fas fa-tractor mr-2"></i>Land</span>
+                                            <span>{{ problem.total_land }} acres</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="resource-indicator p-3 rounded mb-3" style="background-color: rgba(23, 162, 184, 0.1);">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="font-weight-bold"><i class="fas fa-users mr-2"></i>Labor</span>
+                                            <span>{{ problem.labor_available }} hours</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="resource-indicator p-3 rounded mb-3" style="background-color: rgba(0, 123, 255, 0.1);">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="font-weight-bold"><i class="fas fa-tint mr-2"></i>Water</span>
+                                            <span>{{ problem.water_available }} liters</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Optimal Solution Section -->
+                        <div class="p-5 bg-light">
+                            <h4 class="card-title mb-4 text-primary">
+                                <i class="fas fa-chart-line mr-2"></i>Optimal Solution
+                            </h4>
+                            
+                            <div class="alert alert-success border-0 shadow-sm">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-3">
+                                        <i class="fas fa-trophy fa-2x text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="alert-heading mb-1">Maximum Profit Achievable</h5>
+                                        <h3 class="mb-0">₹{{ problem.max_profit|floatformat:2 }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="allocation-card p-4 mb-4 rounded shadow-sm" style="border-left: 4px solid #28a745;">
+                                        <h5 class="font-weight-bold">{{ problem.crop1_name }}</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>Land Allocation:</span>
+                                            <span class="font-weight-bold text-success">{{ problem.crop1_land|floatformat:2 }} acres</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                            <span>Projected Profit:</span>
+                                            <span class="font-weight-bold">₹<span class="crop1-profit">{{ problem.crop1_profit }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="allocation-card p-4 mb-4 rounded shadow-sm" style="border-left: 4px solid #17a2b8;">
+                                        <h5 class="font-weight-bold">{{ problem.crop2_name }}</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>Land Allocation:</span>
+                                            <span class="font-weight-bold text-info">{{ problem.crop2_land|floatformat:2 }} acres</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                            <span>Projected Profit:</span>
+                                            <span class="font-weight-bold">₹<span class="crop2-profit">{{ problem.crop2_profit }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="mt-4 mb-3 text-primary"><i class="fas fa-chart-pie mr-2"></i>Resource Utilization</h5>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="resource-usage-card p-3 rounded mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="font-weight-bold">Land</span>
+                                            <span>{{ problem.crop1_land|floatformat:2 }} + {{ problem.crop2_land|floatformat:2 }} / {{ problem.total_land }} acres</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar bg-success land-usage" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="resource-usage-card p-3 rounded mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="font-weight-bold">Labor</span>
+                                            <span>{{ solution.labor_used|floatformat:2 }} / {{ problem.labor_available }} hours</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar bg-info labor-usage" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="resource-usage-card p-3 rounded mb-3">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="font-weight-bold">Water</span>
+                                            <span>{{ solution.water_used|floatformat:2 }} / {{ problem.water_available }} liters</span>
+                                        </div>
+                                        <div class="progress" style="height: 10px;">
+                                            <div class="progress-bar bg-primary water-usage" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-5">
+                                <a href="{% url 'simplex_method' %}" class="btn btn-primary btn-lg px-5 py-3 shadow">
+                                    <i class="fas fa-calculator mr-2"></i>Run New Optimization
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Tips Section -->
+                <div class="card shadow-sm mt-4 border-0">
+                    <div class="card-body p-4">
+                        <h5 class="text-primary mb-3"><i class="fas fa-lightbulb mr-2"></i>Optimization Tips</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="d-flex">
+                                    <div class="mr-3 text-warning">
+                                        <i class="fas fa-seedling fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-weight-bold">Crop Rotation</h6>
+                                        <p class="text-muted small">Consider rotating crops to maintain soil health.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex">
+                                    <div class="mr-3 text-info">
+                                        <i class="fas fa-water fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-weight-bold">Water Efficiency</h6>
+                                        <p class="text-muted small">Drip irrigation can reduce water usage by 30-50%.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex">
+                                    <div class="mr-3 text-success">
+                                        <i class="fas fa-chart-bar fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-weight-bold">Market Trends</h6>
+                                        <p class="text-muted small">Check current market prices for better profit margins.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate projected profits
+    const crop1Profit = parseFloat("{{ problem.crop1_profit }}") * parseFloat("{{ problem.crop1_land }}");
+    const crop2Profit = parseFloat("{{ problem.crop2_profit }}") * parseFloat("{{ problem.crop2_land }}");
+    
+    document.querySelector('.crop1-profit').textContent = crop1Profit.toFixed(2);
+    document.querySelector('.crop2-profit').textContent = crop2Profit.toFixed(2);
+    
+    // Calculate usage percentages
+    const landUsage = (parseFloat("{{ problem.crop1_land }}") + parseFloat("{{ problem.crop2_land }}")) / parseFloat("{{ problem.total_land }}") * 100;
+    const laborUsage = parseFloat("{{ solution.labor_used }}") / parseFloat("{{ problem.labor_available }}") * 100;
+    const waterUsage = parseFloat("{{ solution.water_used }}") / parseFloat("{{ problem.water_available }}") * 100;
+    
+    // Update progress bars
+    document.querySelector('.land-usage').style.width = landUsage + '%';
+    document.querySelector('.labor-usage').style.width = laborUsage + '%';
+    document.querySelector('.water-usage').style.width = waterUsage + '%';
+});
+</script>
+
+<style>
+    .card {
+        border: none;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .parameter-card {
+        transition: all 0.3s ease;
+    }
+    
+    .parameter-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .resource-indicator {
+        transition: all 0.3s ease;
+    }
+    
+    .resource-indicator:hover {
+        background-color: rgba(0,0,0,0.05) !important;
+    }
+    
+    .allocation-card {
+        transition: all 0.3s ease;
+        background: white;
+    }
+    
+    .allocation-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(0,0,0,0.1) !important;
+    }
+</style>
+{% endblock %}

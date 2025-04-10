@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Optimization Method</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 300px 20px;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #00ffcc, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: #ddd;
+            animation: fadeInUp 2s ease-in-out;
+        }
+
+        /* Keyframe Animations */
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ccff; }
+            100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ccff; }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Methods Section */
+        .methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            padding: 150px 20px;
+            text-align: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Method Card - Gradient Border */
+        .method-card {
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #00ffcc, #00ccff);
+            z-index: -1;
+            border-radius: 22px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .method-card:hover::before {
+            opacity: 1;
+        }
+        .method-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .method-card i {
+            font-size: 4rem;
+            color: #00ffcc;
+            margin-bottom: 20px;
+            transition: transform 0.5s ease, text-shadow 0.5s ease;
+        }
+        .method-card:hover i {
+            transform: scale(1.2);
+            text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ccff;
+        }
+        .method-card h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-bottom: 15px;
+        }
+        .method-card p {
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        /* Button - Gradient Border */
+        .btn-method {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ffcc, #00ccff);
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-method::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #00ccff, #00ffcc);
+            z-index: -1;
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .btn-method:hover::before {
+            opacity: 1;
+        }
+        .btn-method:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+        }
+
+        /* Parallax Scrolling Effect */
+        .parallax {
+            background: url('{% static "images/parallax-bg.jpg" %}') no-repeat center center/cover;
+            background-attachment: fixed;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .parallax h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00ffcc;
+            animation: glow 2s infinite alternate;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            margin-top: 100px;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .footer a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease-in-out;
+        }
+        .footer a:hover {
+            color: #00ccff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .methods {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                padding: 50px 20px;
+            }
+            .method-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Optimize Your Farm Efficiently</h1>
+        <p>Choose the best linear programming method for your needs.</p>
+    </section>
+
+    <!-- Methods Section -->
+    <section class="methods">
+        <div class="method-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Graphical Method</h3>
+            <p>Visualize and solve linear programming problems with two variables.</p>
+            <a href="{% url 'graphical_method' %}" class="btn-method">Select</a>
+        </div>
+        <div class="method-card">
+            <i class="fas fa-calculator"></i>
+            <h3>Simplex Method</h3>
+            <p>Solve complex linear programming problems efficiently.</p>
+            <a href="{% url 'simplex_method' %}" class="btn-method">Select</a>
+        </div>
+        <div class="method-card">
+            <i class="fas fa-truck"></i>
+            <h3>Transportation Method</h3>
+            <p>Optimize transportation and distribution logistics.</p>
+            <a href="{% url 'transportation_method' %}" class="btn-method">Select</a>
+        </div>
+        <div class="method-card">
+            <i class="fas fa-seedling"></i>
+            <h3>Knapsack Method</h3>
+            <p>Solve resource allocation problems with constraints.</p>
+            <a href="{% url 'knapsack_method' %}" class="btn-method">Select</a>
+        </div>
+    </section>
+
+    <!-- Parallax Section -->
+    <div class="parallax">
+        <h2>Revolutionize Your Farming Today!</h2>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 AgriOptimize. All rights reserved.</p>
+        <p>
+            <a href="#">About Us</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">Privacy Policy</a>
+        </p>
+    </footer>
+
+    <!-- Particle.js Script -->
+    <script>
+        particlesJS.load('particles-js', '{% static "particles.json" %}', function() {
+            console.log('Particles.js loaded!');
+        });
+
+        // GSAP Scroll Animations
+        gsap.from('.hero h1', { duration: 1.5, y: -50, opacity: 0, ease: 'power3.out' });
+        gsap.from('.hero p', { duration: 1.5, y: 50, opacity: 0, ease: 'power3.out', delay: 0.5 });
+        gsap.from('.method-card', { duration: 1, y: 50, opacity: 0, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: '.methods', start: 'top 80%' } });
+        gsap.from('.parallax h2', { duration: 1, y: 50, opacity: 0, ease: 'power3.out', scrollTrigger: { trigger: '.parallax', start: 'top 80%' } });
+    </script>
+</body>
+</html>

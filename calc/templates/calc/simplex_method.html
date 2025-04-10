@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0 text-center"><i class="fas fa-calculator me-2"></i>Farm Optimization Calculator</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="optimizationForm" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Crop Comparison Section -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-light">
+                                        <h4 class="mb-0"><i class="fas fa-seedling text-success me-2"></i>{{ form.crop1_name.label }}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop1_name.id_for_label }}" class="form-label">Crop Name</label>
+                                            {{ form.crop1_name }}
+                                            <div class="invalid-feedback">Please provide a crop name</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop1_profit.id_for_label }}" class="form-label">Profit per Acre (₹)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">₹</span>
+                                                {{ form.crop1_profit }}
+                                            </div>
+                                            <div class="invalid-feedback">Please enter a valid profit amount</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop1_labor.id_for_label }}" class="form-label">Labor Required (hours/acre)</label>
+                                            {{ form.crop1_labor }}
+                                            <div class="invalid-feedback">Please enter labor hours</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop1_water.id_for_label }}" class="form-label">Water Required (liters/acre)</label>
+                                            <div class="input-group">
+                                                {{ form.crop1_water }}
+                                                <span class="input-group-text">L</span>
+                                            </div>
+                                            <div class="invalid-feedback">Please enter water requirement</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-light">
+                                        <h4 class="mb-0"><i class="fas fa-seedling text-success me-2"></i>{{ form.crop2_name.label }}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop2_name.id_for_label }}" class="form-label">Crop Name</label>
+                                            {{ form.crop2_name }}
+                                            <div class="invalid-feedback">Please provide a crop name</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop2_profit.id_for_label }}" class="form-label">Profit per Acre (₹)</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">₹</span>
+                                                {{ form.crop2_profit }}
+                                            </div>
+                                            <div class="invalid-feedback">Please enter a valid profit amount</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop2_labor.id_for_label }}" class="form-label">Labor Required (hours/acre)</label>
+                                            {{ form.crop2_labor }}
+                                            <div class="invalid-feedback">Please enter labor hours</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.crop2_water.id_for_label }}" class="form-label">Water Required (liters/acre)</label>
+                                            <div class="input-group">
+                                                {{ form.crop2_water }}
+                                                <span class="input-group-text">L</span>
+                                            </div>
+                                            <div class="invalid-feedback">Please enter water requirement</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resource Constraints Section -->
+                        <div class="card border-info mb-4">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="fas fa-tractor me-2"></i>Resource Constraints</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="{{ form.total_land.id_for_label }}" class="form-label">Total Land Available (acres)</label>
+                                        <div class="input-group">
+                                            {{ form.total_land }}
+                                            <span class="input-group-text">acres</span>
+                                        </div>
+                                        <div class="invalid-feedback">Please enter available land</div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="{{ form.labor_available.id_for_label }}" class="form-label">Total Labor Available (hours)</label>
+                                        <div class="input-group">
+                                            {{ form.labor_available }}
+                                            <span class="input-group-text">hours</span>
+                                        </div>
+                                        <div class="invalid-feedback">Please enter available labor</div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="{{ form.water_available.id_for_label }}" class="form-label">Total Water Available (liters)</label>
+                                        <div class="input-group">
+                                            {{ form.water_available }}
+                                            <span class="input-group-text">liters</span>
+                                        </div>
+                                        <div class="invalid-feedback">Please enter available water</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button with Loading Indicator -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg" id="calculateBtn">
+                                <span id="submitText">Calculate Optimal Solution</span>
+                                <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this to your base.html or in a block -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+    }
+    .input-group-text {
+        background-color: #e9ecef;
+    }
+</style>
+
+<script>
+// Form validation and submission handling
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('optimizationForm');
+    const calculateBtn = document.getElementById('calculateBtn');
+    const submitText = document.getElementById('submitText');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            // Show loading state
+            submitText.textContent = "Calculating...";
+            calculateBtn.disabled = true;
+            loadingSpinner.classList.remove('d-none');
+        }
+        form.classList.add('was-validated');
+    }, false);
+    
+    // Real-time validation for number fields
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    numberInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.validity.rangeUnderflow || this.validity.rangeOverflow) {
+                this.setCustomValidity('Please enter a positive value');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

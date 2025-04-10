@@ -1,0 +1,339 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriOptimize – Smart Solutions for Farming Efficiency</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+    <!-- Animate.css Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 250px 20px;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #00ffcc, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: #ddd;
+            animation: fadeInUp 2s ease-in-out;
+        }
+
+        /* Keyframe Animations */
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ccff; }
+            100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ccff; }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            padding: 100px 20px;
+            text-align: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Feature Box - 3D Hover Effect */
+        .feature-box {
+            padding: 40px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: float 6s infinite ease-in-out;
+        }
+        .feature-box:hover {
+            transform: rotateY(15deg) rotateX(15deg) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .feature-box i {
+            font-size: 4rem;
+            color: #00ffcc;
+            margin-bottom: 20px;
+            transition: transform 0.5s ease;
+        }
+        .feature-box:hover i {
+            transform: scale(1.2) rotate(360deg);
+        }
+        .feature-box h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-bottom: 15px;
+        }
+        .feature-box p {
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        /* Start Optimization Button - Neon Effect */
+        .optimize-btn {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .btn-start {
+            background: linear-gradient(135deg, #00ffcc, #00ccff);
+            color: #000;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .btn-start::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.5s ease-in-out;
+            z-index: 0;
+        }
+        .btn-start:hover::before {
+            transform: translate(-50%, -50%) rotate(135deg);
+        }
+        .btn-start span {
+            position: relative;
+            z-index: 1;
+        }
+        .btn-start:hover {
+            background: linear-gradient(135deg, #00ccff, #00ffcc);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Case Studies Section */
+        .case-studies {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .case-studies h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #00ffcc;
+        }
+        .case-study-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .case-study-card:hover {
+            transform: translateY(-10px);
+        }
+        .case-study-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .case-study-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #00ffcc;
+        }
+        .case-study-card p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .footer a {
+            color: #00ffcc;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="animate__animated animate__fadeInDown">Maximize Your Farm's Potential with Linear Programming</h1>
+        <p class="animate__animated animate__fadeInUp">Optimize Resources, Minimize Costs, and Boost Yields!</p>
+        <p class="animate__animated animate__fadeInUp">Harness the power of data-driven decision-making to solve agricultural challenges efficiently.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-box animate__animated animate__fadeInLeft">
+            <i class="fas fa-seedling"></i>
+            <h3>Crop Optimization</h3>
+            <p>Choose the best crops for maximum profit and sustainability.</p>
+        </div>
+        <div class="feature-box animate__animated animate__fadeInUp">
+            <i class="fas fa-tint"></i>
+            <h3>Resource Allocation</h3>
+            <p>Optimize water, fertilizer, and labor usage for better efficiency.</p>
+        </div>
+        <div class="feature-box animate__animated animate__fadeInDown">
+            <i class="fas fa-tractor"></i>
+            <h3>Land Utilization</h3>
+            <p>Plan the most efficient use of your farmland.</p>
+        </div>
+        <div class="feature-box animate__animated animate__fadeInRight">
+            <i class="fas fa-truck"></i>
+            <h3>Supply Chain</h3>
+            <p>Optimize transportation and storage for cost-effective logistics.</p>
+        </div>
+    </section>
+
+    <!-- Start Optimization Button -->
+    <div class="optimize-btn">
+        <a href="{% url 'optimization' %}" class="btn-start pulse animate__animated animate__pulse animate__infinite">
+            <i class="fas fa-rocket"></i>
+            <span>Start Optimization</span>
+        </a>
+    </div>
+
+    <!-- Case Studies Section -->
+    <section class="case-studies">
+        <h2 class="animate__animated animate__fadeIn">Success Stories</h2>
+        <div class="features">
+            <div class="case-study-card animate__animated animate__fadeInLeft">
+                <img src="{% static 'images/case1.jpg' %}" alt="Case Study 1">
+                <h3>Increased Crop Yield by 20%</h3>
+                <p>Learn how a farmer optimized crop rotation and resource allocation.</p>
+            </div>
+            <div class="case-study-card animate__animated animate__fadeInUp">
+                <img src="{% static 'images/case2.jpg' %}" alt="Case Study 2">
+                <h3>Reduced Water Usage by 30%</h3>
+                <p>Discover how smart irrigation planning saved resources.</p>
+            </div>
+            <div class="case-study-card animate__animated animate__fadeInRight">
+                <img src="{% static 'images/case3.jpg' %}" alt="Case Study 3">
+                <h3>Optimized Supply Chain</h3>
+                <p>See how a farm reduced transportation costs by 15%.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2023 AgriOptimize. All rights reserved to Yashwanth and Sri Sai Arun.</p>
+        <p>
+            <a href="#">About Us</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">Privacy Policy</a>
+        </p>
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <!-- Particle.js Script -->
+    <script>
+        particlesJS.load('particles-js', '{% static "particles.json" %}', function() {
+            console.log('Particles.js loaded!');
+        });
+
+        // GSAP Animations
+        gsap.from('.hero h1', { duration: 1.5, y: -50, opacity: 0, ease: 'power3.out' });
+        gsap.from('.hero p', { duration: 1.5, y: 50, opacity: 0, ease: 'power3.out', delay: 0.5 });
+        gsap.from('.feature-box', { duration: 1, y: 50, opacity: 0, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: '.features', start: 'top 80%' } });
+        gsap.from('.case-study-card', { duration: 1, y: 50, opacity: 0, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: '.case-studies', start: 'top 80%' } });
+    </script>
+</body>
+</html>
