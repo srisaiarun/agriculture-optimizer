@@ -12,7 +12,7 @@ class FarmerProblem(models.Model):
     labor_available = models.FloatField(default=32)
     crop1_labor = models.FloatField(default=2)
     crop2_labor = models.FloatField(default=4)
-    water_available = models.FloatField(default=5000)
+    water_available = models.FloatField(default=5000)  
     crop1_water = models.FloatField(default=1000)
     crop2_water = models.FloatField(default=500)
     max_profit = models.FloatField(blank=True, null=True)
